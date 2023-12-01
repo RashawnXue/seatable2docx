@@ -19,8 +19,6 @@ base.auth()
 
 app = FastAPI()
 
-date = str(datetime.now().date()).replace('-', '.')
-
 
 def get_data() -> list:
     """
@@ -42,6 +40,7 @@ def gen_doc(data: list) -> Document:
     :return: the docx object
     """
     doc = Document()
+    date = str(datetime.now().date()).replace('-', '.')
 
     # Set title
     paragraph = doc.add_paragraph()
@@ -97,6 +96,8 @@ def download_doc():
     stream = BytesIO()
     doc.save(stream)
     stream.seek(0)
+
+    date = str(datetime.now().date()).replace('-', '.')
 
     headers = {"Content-Disposition": "attachment; filename=" + date + 'filename.docx'.encode('utf-8').decode(
         'latin-1')}
